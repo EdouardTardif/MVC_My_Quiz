@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Categorie;
+use App\Entity\Question;
 
 class IndexController extends AbstractController
 {
@@ -15,8 +16,12 @@ class IndexController extends AbstractController
     {
     
         $repository = $this->getDoctrine()->getRepository(Categorie::class);
+
+        $repository2 = $this->getDoctrine()->getRepository(Question::class);
+
+        $categoryName = $repository2->getCategorie();
         $res = $repository->findAll();
-        return $this->render('index/index.html.twig',['res'=>$res]);
+        return $this->render('index/index.html.twig',['res'=>$res,'question'=>$categoryName]);
     }
     
 

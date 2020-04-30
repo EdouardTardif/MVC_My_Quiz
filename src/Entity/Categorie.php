@@ -45,5 +45,9 @@ class Categorie
         return $this;
     }
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="categorie")
+     */
+    private $products;
 
 }

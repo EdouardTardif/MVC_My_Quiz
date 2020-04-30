@@ -35,6 +35,12 @@ class Question
      */
     private $question = 'NULL';
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $id_categorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,5 +70,22 @@ class Question
         return $this;
     }
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="question")
+     */
+    private $category;
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
 
 }
