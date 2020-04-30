@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Categorie;
 
 class IndexController extends AbstractController
 {
@@ -12,7 +13,10 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        return $this->render('index/index.html.twig');
+    
+        $repository = $this->getDoctrine()->getRepository(Categorie::class);
+        $res = $repository->findAll();
+        return $this->render('index/index.html.twig',['res'=>$res]);
     }
     
 
