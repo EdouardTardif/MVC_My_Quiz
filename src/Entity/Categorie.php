@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +30,16 @@ class Categorie
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="id_categorie", orphanRemoval=true)
+     */
+    private $Question;
+
+    public function __construct()
+    {
+        $this->Question = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,8 +58,35 @@ class Categorie
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="categorie")
+     * @return Collection|Question[]
      */
-    private $products;
+    public function getQuestion(): Collection
+    {
+        return $this->Question;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->Question->contains($question)) {
+            $this->Question[] = $question;
+            $question->setIdCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->Question->contains($question)) {
+            $this->Question->removeElement($question);
+            // set the owning side to null (unless already changed)
+            if ($question->getIdCategorie() === $this) {
+                $question->setIdCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 }

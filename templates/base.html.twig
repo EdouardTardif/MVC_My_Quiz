@@ -236,7 +236,25 @@
             </div>
         </div>
         </nav>
-        {% block body %}{% endblock %}
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <aside id="sidebar">
+                    <ul id="sidemenu" class="sidebar-nav">
+                        {% for re in res %}
+                        <li>
+                            <a href="{{ path()}}">
+                                <span class="sidebar-icon"><i class="fa fa-dashboard"></i></span>
+                                <span class="sidebar-title">{{ re.name }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </aside>            
+            </div>
+            <main id="page-content-wrapper" role="main">
+                {% block body %}{% endblock %}
+            </main>
+        </div> 
         {% block javascripts %}{% endblock %}
     </body>
 </html>

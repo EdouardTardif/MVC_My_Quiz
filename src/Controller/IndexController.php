@@ -17,29 +17,30 @@ class IndexController extends AbstractController
     
         $repository = $this->getDoctrine()->getRepository(Categorie::class);
 
-        $repository2 = $this->getDoctrine()->getRepository(Question::class);
+        // $repository2 = $this->getDoctrine()->getRepository(Question::class);
 
-        $categoryName = $repository2->getCategorie();
+        $categoryName = $repository->findOneById(1)->getQuestion();
+        // dd($categoryName);
         $res = $repository->findAll();
-        return $this->render('index/index.html.twig',['res'=>$res,'question'=>$categoryName]);
+        // return $this->render('index/index.html.twig',['res'=>$res,'question'=>$categoryName]);
     }
     
 
-    /**
-     * @Route("/register", name="register")
-     */
-    public function register()
-    {
-        return $this->render('index/index.html.twig');
-    }
+    // /**
+    //  * @Route("/register", name="register")
+    //  */
+    // public function register()
+    // {
+    //     return $this->render('index/index.html.twig');
+    // }
 
-    /**
-     * @Route("/login", name="login")
-     */
-    public function login()
-    {
-        return $this->render('index/index.html.twig', [
-            'controller_name' => 'IndexController',
-        ]);
-    }
+    // /**
+    //  * @Route("/login", name="login")
+    //  */
+    // public function login()
+    // {
+    //     return $this->render('index/index.html.twig', [
+    //         'controller_name' => 'IndexController',
+    //     ]);
+    // }
 }
