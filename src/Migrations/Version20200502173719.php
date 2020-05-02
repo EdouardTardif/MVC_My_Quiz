@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200501162302 extends AbstractMigration
+final class Version20200502173719 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,13 +22,11 @@ final class Version20200501162302 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE question ADD id_categorie_id INT NOT NULL, ADD categorie_id INT DEFAULT NULL, ADD questions_id INT NOT NULL');
-        $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494E9F34925F FOREIGN KEY (id_categorie_id) REFERENCES categorie (id)');
         $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EBCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
-        $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EBCB134CE FOREIGN KEY (questions_id) REFERENCES categorie (id)');
-        $this->addSql('CREATE INDEX IDX_B6F7494E9F34925F ON question (id_categorie_id)');
         $this->addSql('CREATE INDEX IDX_B6F7494EBCF5E72D ON question (categorie_id)');
-        $this->addSql('CREATE INDEX IDX_B6F7494EBCB134CE ON question (questions_id)');
+        $this->addSql('ALTER TABLE reponse ADD question_id INT NOT NULL');
+        $this->addSql('ALTER TABLE reponse ADD CONSTRAINT FK_5FB6DEC71E27F6BF FOREIGN KEY (question_id) REFERENCES question (id)');
+        $this->addSql('CREATE INDEX IDX_5FB6DEC71E27F6BF ON reponse (question_id)');
     }
 
     public function down(Schema $schema) : void
@@ -36,12 +34,10 @@ final class Version20200501162302 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE question DROP FOREIGN KEY FK_B6F7494E9F34925F');
         $this->addSql('ALTER TABLE question DROP FOREIGN KEY FK_B6F7494EBCF5E72D');
-        $this->addSql('ALTER TABLE question DROP FOREIGN KEY FK_B6F7494EBCB134CE');
-        $this->addSql('DROP INDEX IDX_B6F7494E9F34925F ON question');
         $this->addSql('DROP INDEX IDX_B6F7494EBCF5E72D ON question');
-        $this->addSql('DROP INDEX IDX_B6F7494EBCB134CE ON question');
-        $this->addSql('ALTER TABLE question DROP id_categorie_id, DROP categorie_id, DROP questions_id');
+        $this->addSql('ALTER TABLE reponse DROP FOREIGN KEY FK_5FB6DEC71E27F6BF');
+        $this->addSql('DROP INDEX IDX_5FB6DEC71E27F6BF ON reponse');
+        $this->addSql('ALTER TABLE reponse DROP question_id');
     }
 }

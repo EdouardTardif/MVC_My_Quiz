@@ -31,13 +31,13 @@ class Categorie
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="id_categorie", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="categorie", orphanRemoval=true)
      */
-    private $Question;
+    private $categorie;
 
     public function __construct()
     {
-        $this->Question = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -60,28 +60,28 @@ class Categorie
     /**
      * @return Collection|Question[]
      */
-    public function getQuestion(): Collection
+    public function getCategorie(): Collection
     {
-        return $this->Question;
+        return $this->categorie;
     }
 
-    public function addQuestion(Question $question): self
+    public function addCategorie(Question $categorie): self
     {
-        if (!$this->Question->contains($question)) {
-            $this->Question[] = $question;
-            $question->setIdCategorie($this);
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie[] = $categorie;
+            $categorie->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeQuestion(Question $question): self
+    public function removeCategorie(Question $categorie): self
     {
-        if ($this->Question->contains($question)) {
-            $this->Question->removeElement($question);
+        if ($this->categorie->contains($categorie)) {
+            $this->categorie->removeElement($categorie);
             // set the owning side to null (unless already changed)
-            if ($question->getIdCategorie() === $this) {
-                $question->setIdCategorie(null);
+            if ($categorie->getCategorie() === $this) {
+                $categorie->setCategorie(null);
             }
         }
 

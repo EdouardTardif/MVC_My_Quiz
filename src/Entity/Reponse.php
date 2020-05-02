@@ -24,7 +24,7 @@ class Reponse
     /**
      * @var int|null
      *
-     * @ORM\Column(name="id_question", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="question_id", type="integer", nullable=true, options={"default"="NULL"})
      */
     private $idQuestion = 'NULL';
 
@@ -41,6 +41,12 @@ class Reponse
      * @ORM\Column(name="reponse_expected", type="boolean", nullable=true, options={"default"="NULL"})
      */
     private $reponseExpected = 'NULL';
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="Answers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $question;
 
     public function getId(): ?int
     {
@@ -79,6 +85,18 @@ class Reponse
     public function setReponseExpected(?bool $reponseExpected): self
     {
         $this->reponseExpected = $reponseExpected;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

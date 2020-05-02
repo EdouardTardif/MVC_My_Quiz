@@ -242,7 +242,7 @@
                     <ul id="sidemenu" class="sidebar-nav">
                         {% for re in res %}
                         <li>
-                            <a href="{{ path()}}">
+                            <a href="{{ path('categorie', {id:re.id , quest:0}) }}">
                                 <span class="sidebar-icon"><i class="fa fa-dashboard"></i></span>
                                 <span class="sidebar-title">{{ re.name }}</span>
                             </a>

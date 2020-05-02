@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    {% if (next != 'submit') %}
+    <div>
+        <h3>{{ question.question }}</h3>
+    </div>
+    <div>
+        {% set reponses = question.getAnswers %}
+        {% set categorie = question.getCategorie %}
+        {% if (lastrep == true and next != 1) %}
+            <h4>your last response was true</h4>
+        {% elseif (lastrep == false and next != 1) %}
+            <h4>your last response was false</h4>
+        {% elseif (lastrep == null) %}
+        {% endif %}
+         <h2>Your score is {{ score }} REPONSEID = {{resultat}}</h2>
+
+       
+        <form action="{{ path('categorie', {id:categorie.id , quest:next}) }}" method="POST">
+            <ul>
+            {% for reponse in reponses %}
+            <li>
+            <input type="radio" name="reponse" id="{{reponse.id}}" value="{{reponse.id}}">
+            <label for="reponse">{{ reponse.reponse }}</label>
+            </li>
+            {% endfor %}
+            </ul>
+        <button type="submit" class="btn btn-success"> NEXT QUESTION</a>
+        </form>
+    </div>
+    {% else %}
+    <div>
+        {% if (score > 10) %}
+            <h3>Vous avez triche bien joue {{ score }} / 10</h3>
+        {% else %}
+            <h3>VOTRE RESULTAT EST {{ score }} / 10</h3>
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}
